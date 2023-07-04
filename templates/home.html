@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bayer Image Converter</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: block;
+            width: 200px;
+            height: 60px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Bayer Image Converter Tool!</h1>
+    <h1>Please select Inside or Outside!</h1>
+    <form action="/inside">
+        <input class="button" type="submit" value="Inside">
+    </form>
+    <form action="/outside">
+        <input class="button" type="submit" value="Outside">
+    </form>
+</body>
+</html>
