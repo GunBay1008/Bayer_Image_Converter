@@ -4,8 +4,9 @@ import cv2
 import numpy as np
 from PIL import Image
 import ssl
+import time
 
-ssl._create_default_https_context = ssl._create_unverified_context
+ssl._create_default_https_context = ssl._create_unverified_context()
 
 app = Flask(__name__)
 
@@ -159,6 +160,8 @@ def upload():
 
             # Save the resulting image
             cv2.imwrite(output_file_path, result_image)
+            print("image saved in " + output_file_path)
+            time.sleep(1)
 
             # Remove the temporary file
             os.remove(temp_path_pgm)
