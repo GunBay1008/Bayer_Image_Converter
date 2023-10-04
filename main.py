@@ -23,6 +23,10 @@ def inside():
         # Get the uploaded files
         files = request.files.getlist('files')
 
+        # Check if no files were selected
+        if len(files) == 0:
+            return render_template('inside.html', error="Please choose at least one file.")
+
         # Process each file
         for file in files:
             # Save the uploaded file to a temporary folder
@@ -56,20 +60,18 @@ def inside():
             # Calculate the height of the image
             height = bayer_image.shape[0]
 
-            # Divide the image into three parts
-            top_third = bayer_image[:height // 3, :]
-            middle_third = bayer_image[height // 3:2 * height // 3, :]
-            bottom_third = bayer_image[2 * height // 3:, :]
+            # Divide the image into two parts
+            top_half = bayer_image[:height // 2, :]
+            bottom_half = bayer_image[height // 2:, :]
 
-            # Convert the top 1/3 and bottom 1/3 using cv2.COLOR_BAYER_GR2BGR
-            bgr_top_third = cv2.cvtColor(top_third, cv2.COLOR_BAYER_GR2BGR)
-            bgr_bottom_third = cv2.cvtColor(bottom_third, cv2.COLOR_BAYER_GR2BGR)
+            # Convert the top half using cv2.COLOR_BAYER_GR2BGR
+            bgr_top_half = cv2.cvtColor(top_half, cv2.COLOR_BAYER_GR2BGR)
 
-            # Convert the middle 1/3 using cv2.COLOR_BAYER_RG2RGB
-            rgb_middle_third = cv2.cvtColor(middle_third, cv2.COLOR_BAYER_RG2RGB)
+            # Convert the bottom half using cv2.COLOR_BAYER_GR2RGB
+            rgb_bottom_half = cv2.cvtColor(bottom_half, cv2.COLOR_BAYER_GR2BGR)
 
             # Concatenate the converted parts vertically
-            result_image = np.concatenate((bgr_top_third, rgb_middle_third, bgr_bottom_third), axis=0)
+            result_image = np.concatenate((bgr_top_half, rgb_bottom_half), axis=0)
 
             # Generate the output file path
             output_file_path = os.path.join(output_folder, file.filename)
@@ -83,7 +85,7 @@ def inside():
             cv2.imwrite(output_file_path, result_image)
             print("image saved in " + output_file_path)
             time.sleep(1)
-
+            
             # Remove the temporary file
             os.remove(temp_path_pgm)
             os.remove(temp_path_jpg)
@@ -99,6 +101,10 @@ def upload():
     if request.method == 'POST':
         # Get the uploaded files
         files = request.files.getlist('files')
+
+   # Check if no files were selected
+        if len(files) == 0:
+            return render_template('upload.html', error="Please choose at least one file.")
 
         # Process each file
         for file in files:
