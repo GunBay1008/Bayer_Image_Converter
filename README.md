@@ -9,7 +9,7 @@ To get started with the project, follow these steps:
 
 ## Steo 1: Clone this Repo
 ```
-git clone
+git clone https://github.com/GunBay1008/Bayer_Image_Converter.git
 ```
 
 ## Step 2: Set Up a Virtual Environment
